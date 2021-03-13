@@ -13,9 +13,11 @@ window.onload = function() {
       canvas.width = 1000;
     }
   }
+
+  fitCanvas();
+
   window.onresize = fitCanvas;
   // ここまでリサイズ処理
-
 
 
 
