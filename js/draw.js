@@ -4,6 +4,7 @@ window.addEventListener("load", () => {
   // ここからリサイズ処理
   canvas.width = 1000 - 2;
   function fitCanvas() {
+    setBgColor();
     // margin: 0 10px
     canvas.width = document.documentElement.clientWidth - 20 - 2;
 
@@ -28,7 +29,28 @@ window.addEventListener("load", () => {
   let isDrag = false;
 
   //線画色のデフォルトを黒にする
-  let penColor = "#000000";
+  let penColor = "black";
+
+  // 線画色変更
+  const penColorChange = document.getElementById("penColor");
+  penColorChange.addEventListener(
+    "change",
+    () => {
+      penColor = penColorChange.value;
+    },
+    false
+  );
+
+  // 線の幅変更
+  let lineThickness = 7;
+  const lineThickChange = document.getElementById("lineWidth");
+  lineThickChange.addEventListener(
+    "change",
+    () => {
+      lineThickness = lineThickChange.value;
+    },
+    false
+  );
 
   // 描画用関数
   function draw(x, y) {
@@ -37,8 +59,9 @@ window.addEventListener("load", () => {
     }
     ctx.lineCap = "round"; // 線の末端
     ctx.lineJoin = "round"; // 線の合流地点
-    ctx.lineWidth = "5"; // 線の幅
+    ctx.lineWidth = lineThickness; // 線の幅
     ctx.strokeStyle = penColor; // 線の色
+
     if (mousePosition.x === null || mousePosition.y === null) {
       // ドラッグ開始時の線の開始位置
       ctx.moveTo(x, y);
@@ -59,11 +82,11 @@ window.addEventListener("load", () => {
 
   const eraserButton = document.getElementById("eraser-btn");
   eraserButton.addEventListener("click", () => {
-    if (penColor == "#000000") {
-      penColor = "#FFFFFF";
+    if (penColor !== "white") {
+      penColor = "white";
       eraserButton.innerHTML = "ペンにする";
     } else {
-      penColor = "#000000";
+      penColor = penColorChange.value;
       eraserButton.innerHTML = "消しゴムにする";
     }
   });
