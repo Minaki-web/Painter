@@ -1,27 +1,28 @@
 window.addEventListener("load", () => {
   const canvas = document.getElementById("drawingArea");
   const ctx = canvas.getContext("2d");
-  // ここからリサイズ処理
+  //初期canvasサイズ
   canvas.width = 1000 - 2;
-  function fitCanvas() {
-    setBgColor();
-    // margin: 0 10px
-    canvas.width = document.documentElement.clientWidth - 20 - 2;
 
-    // 1000px以上にしない
-    if (canvas.width > 1000) {
-      canvas.width = 1000 - 2;
+  // レスポンシブサイズ処理
+  const browserWidth = document.documentElement.clientWidth;
+  function fitCanvas() {
+    if (browserWidth <= 1024) {
+      // margin: 0 5px
+      canvas.width = browserWidth - 10 - 2;
     }
   }
 
-  fitCanvas();
+  // canvasの背景色を設定する関数
+  function setBgColor() {
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
 
-  window.onresize = fitCanvas;
-  // ここまでリサイズ処理
+  fitCanvas();
+  setBgColor();
 
   // ここから描画処理
-  // 初期背景を白にする
-  setBgColor();
   // マウスの開始位置の記録用
   const mousePosition = { x: null, y: null };
 
@@ -54,6 +55,7 @@ window.addEventListener("load", () => {
 
   // 描画用関数
   function draw(x, y) {
+    // ドラッグしてないときは何もしない
     if (!isDrag) {
       return;
     }
@@ -61,7 +63,6 @@ window.addEventListener("load", () => {
     ctx.lineJoin = "round"; // 線の合流地点
     ctx.lineWidth = lineThickness; // 線の幅
     ctx.strokeStyle = penColor; // 線の色
-
     if (mousePosition.x === null || mousePosition.y === null) {
       // ドラッグ開始時の線の開始位置
       ctx.moveTo(x, y);
@@ -75,13 +76,15 @@ window.addEventListener("load", () => {
     mousePosition.y = y;
   }
 
-  function clear() {
+  // canvasを真っ白にする関数
+  function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     setBgColor();
   }
 
+  // 消しゴム関数
   const eraserButton = document.getElementById("eraser-btn");
-  eraserButton.addEventListener("click", () => {
+  function erase() {
     if (penColor !== "white") {
       penColor = "white";
       eraserButton.innerHTML = "ペンにする";
@@ -89,43 +92,41 @@ window.addEventListener("load", () => {
       penColor = penColorChange.value;
       eraserButton.innerHTML = "消しゴムにする";
     }
-  });
+  }
 
-  function dragStart(event) {
+  // ドラッグを開始したときの関数の定義
+  function dragStart() {
     ctx.beginPath();
     isDrag = true;
   }
 
-  function dragEnd(event) {
+  // ドラッグを終了したときの関数の定義
+  function dragEnd() {
     ctx.closePath();
     isDrag = false;
     mousePosition.x = null;
     mousePosition.y = null;
   }
 
-  function initEventHandler() {
+  // それぞれのアクションごとに関数を呼び出す
+  function actionEvent() {
     const clearButton = document.getElementById("clear-btn");
-    clearButton.addEventListener("click", clear);
-
+    clearButton.addEventListener("click", clearCanvas);
+    eraserButton.addEventListener("mousedown", erase);
     canvas.addEventListener("mousedown", dragStart);
     canvas.addEventListener("mouseup", dragEnd);
     canvas.addEventListener("mouseout", dragEnd);
-    canvas.addEventListener("mousemove", (event) => {
-      draw(event.layerX, event.layerY);
+    canvas.addEventListener("mousemove", (e) => {
+      draw(e.layerX, e.layerY);
     });
   }
 
-  initEventHandler();
+  actionEvent();
 
+  // 画像にする
   $("#download-btn").on("click", function () {
     const canvas = document.getElementById("drawingArea");
-    const base64 = canvas.toDataURL("image/png");
+    const base64 = canvas.toDataURL("image/jpeg");
     document.getElementById("download-btn").href = base64;
   });
-
-  function setBgColor() {
-    // canvasの背景色を設定(指定がない場合にjpeg保存すると背景が黒になる)
-    ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-  }
 });
