@@ -1,6 +1,6 @@
-window.addEventListener("load", () => {
-  const canvas = document.getElementById("drawingArea");
-  const ctx = canvas.getContext("2d");
+window.addEventListener('load', () => {
+  const canvas = document.getElementById('drawingArea');
+  const ctx = canvas.getContext('2d');
   //初期canvasサイズ
   canvas.width = 1000 - 2;
 
@@ -10,12 +10,15 @@ window.addEventListener("load", () => {
     if (browserWidth <= 1024) {
       // margin: 0 5px
       canvas.width = browserWidth - 10 - 2;
+      if (browserWidth <= 480) {
+        canvas.height = 400;
+      }
     }
   }
 
   // canvasの背景色を設定する関数
   function setBgColor() {
-    ctx.fillStyle = "#FFFFFF";
+    ctx.fillStyle = '#FFFFFF';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
@@ -30,12 +33,12 @@ window.addEventListener("load", () => {
   let isDrag = false;
 
   //線画色のデフォルトを黒にする
-  let penColor = "black";
+  let penColor = 'black';
 
   // 線画色変更
-  const penColorChange = document.getElementById("penColor");
+  const penColorChange = document.getElementById('penColor');
   penColorChange.addEventListener(
-    "change",
+    'change',
     () => {
       penColor = penColorChange.value;
     },
@@ -44,9 +47,9 @@ window.addEventListener("load", () => {
 
   // 線の幅変更
   let lineThickness = 7;
-  const lineThickChange = document.getElementById("lineWidth");
+  const lineThickChange = document.getElementById('lineWidth');
   lineThickChange.addEventListener(
-    "change",
+    'change',
     () => {
       lineThickness = lineThickChange.value;
     },
@@ -59,8 +62,8 @@ window.addEventListener("load", () => {
     if (!isDrag) {
       return;
     }
-    ctx.lineCap = "round"; // 線の末端
-    ctx.lineJoin = "round"; // 線の合流地点
+    ctx.lineCap = 'round'; // 線の末端
+    ctx.lineJoin = 'round'; // 線の合流地点
     ctx.lineWidth = lineThickness; // 線の幅
     ctx.strokeStyle = penColor; // 線の色
     if (mousePosition.x === null || mousePosition.y === null) {
@@ -83,14 +86,14 @@ window.addEventListener("load", () => {
   }
 
   // 消しゴム関数
-  const eraserButton = document.getElementById("eraser-btn");
+  const eraserButton = document.getElementById('eraser-btn');
   function erase() {
-    if (penColor !== "white") {
-      penColor = "white";
-      eraserButton.innerHTML = "ペンにする";
+    if (penColor !== 'white') {
+      penColor = 'white';
+      eraserButton.innerHTML = 'ペンにする';
     } else {
       penColor = penColorChange.value;
-      eraserButton.innerHTML = "消しゴムにする";
+      eraserButton.innerHTML = '消しゴムにする';
     }
   }
 
@@ -110,13 +113,20 @@ window.addEventListener("load", () => {
 
   // それぞれのアクションごとに関数を呼び出す
   function actionEvent() {
-    const clearButton = document.getElementById("clear-btn");
-    clearButton.addEventListener("click", clearCanvas);
-    eraserButton.addEventListener("mousedown", erase);
-    canvas.addEventListener("mousedown", dragStart);
-    canvas.addEventListener("mouseup", dragEnd);
-    canvas.addEventListener("mouseout", dragEnd);
-    canvas.addEventListener("mousemove", (e) => {
+    const clearButton = document.getElementById('clear-btn');
+    clearButton.addEventListener('click', clearCanvas);
+    eraserButton.addEventListener('mousedown', erase);
+    canvas.addEventListener('mousedown', dragStart);
+    canvas.addEventListener('mouseup', dragEnd);
+    canvas.addEventListener('mouseout', dragEnd);
+    canvas.addEventListener('mousemove', (e) => {
+      draw(e.layerX, e.layerY);
+    });
+    eraserButton.addEventListener('touch', erase);
+    canvas.addEventListener('touchstart', dragStart);
+    canvas.addEventListener('touchend', dragEnd);
+    canvas.addEventListener('touchend', dragEnd);
+    canvas.addEventListener('touchmove', (e) => {
       draw(e.layerX, e.layerY);
     });
   }
@@ -124,9 +134,9 @@ window.addEventListener("load", () => {
   actionEvent();
 
   // 画像にする
-  $("#download-btn").on("click", function () {
-    const canvas = document.getElementById("drawingArea");
-    const base64 = canvas.toDataURL("image/jpeg");
-    document.getElementById("download-btn").href = base64;
+  $('#download-btn').on('click', function () {
+    const canvas = document.getElementById('drawingArea');
+    const base64 = canvas.toDataURL('image/jpeg');
+    document.getElementById('download-btn').href = base64;
   });
 });

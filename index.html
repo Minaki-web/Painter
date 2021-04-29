@@ -1,52 +1,50 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="javascript drawing tool." />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="./css/reset.css" />
-    <link rel="stylesheet" type="text/css" href="./css/style.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="js/draw.js"></script>
-    <title>Painter</title>
-  </head>
-  <body>
-    <header>
-      <div class="hd-inr">
-        <h1><a href="#">Painter</a></h1>
-        <h2>Free drawing tool by javascript.</h2>
-      </div>
-    </header>
-    <main>
-      <canvas id="drawingArea" width="" height="598"></canvas>
-      <div class="btn-container mt-20">
-        <button id="clear-btn" class="btn-big">クリア</button>
-        <button id="eraser-btn" class="btn-big">消しゴムにする</button>
-        <a id="download-btn" href="#" download="painttool_drawing.jpg"
-          >ダウンロード</a
-        >
-        <select id="penColor">
-          <option value="black">BLACK</option>
-          <option value="red">RED</option>
-          <option value="blue">BLUE</option>
-          <option value="green">GREEN</option>
-        </select>
-        <select id="lineWidth">
-          <option value="3">細</option>
-          <option value="7" selected>中</option>
-          <option value="12">太</option>
-          <option value="20">極太</option>
-        </select>
-        <div id="result"><img src="" /></div>
-      </div>
-      <p class="size-change-alert mt-20">※PCのみで利用が出来ます。※</p>
-    </main>
-    <footer>
-      <small
-        >&copy; <a href="https://github.com/Minaki-web">Minaki</a> All Rights
-        Reserved.</small
-      >
-    </footer>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="javascript drawing tool." />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" type="text/css" href="./css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="./css/style.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="js/draw.js"></script>
+  <title>Painter</title>
+</head>
+
+<body>
+  <header>
+    <div class="hd-inr">
+      <h1><a href="#">Painter</a></h1>
+      <h2>Free drawing tool by javascript.</h2>
+    </div>
+  </header>
+  <main>
+    <canvas id="drawingArea" width="" height="598"></canvas>
+    <div class="btn-container mt-20">
+      <button id="clear-btn" class="btn-big">クリア</button>
+      <button id="eraser-btn" class="btn-big">消しゴムにする</button>
+      <a id="download-btn" href="#" download="painttool_drawing.jpg">ダウンロード</a>
+      <select id="penColor">
+        <option value="black">BLACK</option>
+        <option value="red">RED</option>
+        <option value="blue">BLUE</option>
+        <option value="green">GREEN</option>
+      </select>
+      <select id="lineWidth">
+        <option value="3">細</option>
+        <option value="7" selected>中</option>
+        <option value="12">太</option>
+        <option value="20">極太</option>
+      </select>
+      <div id="result"><img src="" /></div>
+    </div>
+  </main>
+  <footer>
+    <small>&copy; <a href="https://github.com/Minaki-web">Minaki</a> All Rights
+      Reserved.</small>
+  </footer>
+</body>
+
 </html>
