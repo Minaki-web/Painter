@@ -105,15 +105,7 @@ main .size-change-alert {
   cursor: pointer;
   -webkit-appearance: none;
   -moz-appearance: none;
-  appearance: none;
-}
-
-.btn-container select option::after {
-  content: '';
-  border: 2px solid #000;
-  position: absolute;
-  right: 0;
-  top: 0;
+       appearance: none;
 }
 
 @media screen and (max-width: 478px) {
@@ -141,11 +133,6 @@ footer small {
 @media screen and (max-width: 550px) {
   html {
     font-size: 52.5%;
-    overflow: hidden;
-  }
-  footer {
-    margin-top: 10px;
-    padding: 0;
   }
 }
 

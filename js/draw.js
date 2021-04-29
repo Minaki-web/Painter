@@ -127,6 +127,7 @@ window.addEventListener('load', () => {
     canvas.addEventListener('touchend', dragEnd);
     canvas.addEventListener('touchend', dragEnd);
     canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
       draw(e.layerX, e.layerY);
     });
   }
